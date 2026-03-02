@@ -18,23 +18,34 @@ class CreditsState extends FlxState
         super.create();
 
         var bg = new FlxSprite();
-        bg.loadGraphic("assets/images/menu/title.png", false);
+        bg.loadGraphic("assets/images/background/oiltux.png", false);
         add(bg);
         
-        creditsText = new FlxText(-25, 716, FlxG.width, "
-        Vaesea - Coding, Level, ForestMap Remix
+        creditsText = new FlxText(0, 480, 0, "
+        Vaesea - Coding, Level, ForestMap 
+        Remix
+
         AnatolyStev - Coding
-        SuperTux Team - Original SuperTux assets, both from Milestone 1 and Milestone 2
-        Grumbel - Original SuperTux art, both from Milestone 1 and Milestone 2
-        Stephen Groundwater - Original SuperTux art, both from Milestone 1 and Milestone 2
-        Wansti - Original SuperTux music, both from Milestone 1 and Milestone 2
-        Lukas Nystrand (Mortimer Twang) - Mortimer's Chipdisko
+
+        SuperTux Team - Original SuperTux 
+        assets, both from Milestone 1 and 
+        Milestone 2
+
+        Lukas Nystrand / Mortimer Twang - 
+        Mortimer's Chipdisko
+
         Mystical - Salcon
-        Discover Haxeflixel - Book / pdf I used to make the base of this game, PepperTux
+
+        Discover Haxeflixel - Book / pdf I 
+        used to make the base of this game, 
+        PepperTux
+
         Larry Ewing - Creator of Tux
 
+
+
         Press Space to go back to the Main Menu", 18);
-        creditsText.setFormat("assets/fonts/SuperTux-Medium.ttf", 18, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+        creditsText.setFormat("assets/fonts/SuperTux-Medium.ttf", 18, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         creditsText.borderSize = 1.25;
         creditsText.moves = true;
         creditsText.velocity.y = -speed;

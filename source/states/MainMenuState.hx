@@ -66,10 +66,10 @@ class MainMenuState extends FlxState
         playButton.screenCenter(X);
         add(playButton);
 
-        // Commented out this for now. I don't have time to make the credits menu work right now since this needs to be uploaded to GitHub.
-        // creditsButton = new FlxButton(0, 325, "Credits Menu", clickCredits);
-        // creditsButton.screenCenter(X);
-        // add(creditsButton);
+        
+        creditsButton = new FlxButton(0, 325, "Credits Menu", clickCredits);
+        creditsButton.screenCenter(X);
+        add(creditsButton);
 
         // Adding erase save data button
         eraseSaveButton = new FlxButton(0, 350, "Erase Save", clickEraseSave);
