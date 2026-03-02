@@ -1,0 +1,62 @@
+package states;
+
+import flixel.FlxG;
+import flixel.FlxSprite;
+import flixel.FlxState;
+import flixel.text.FlxText;
+import flixel.util.FlxColor;
+
+class CreditsState extends FlxState
+{
+    var creditsText:FlxText;
+
+    var speed = 20;
+    var increaseOrDecreaseSpeed = 10;
+
+    override public function create()
+    {
+        super.create();
+
+        var bg = new FlxSprite();
+        bg.loadGraphic("assets/images/menu/title.png", false);
+        add(bg);
+        
+        creditsText = new FlxText(-25, 716, FlxG.width, "
+        Vaesea - Coding, Level, ForestMap Remix
+        AnatolyStev - Coding
+        SuperTux Team - Original SuperTux assets, both from Milestone 1 and Milestone 2
+        Grumbel - Original SuperTux art, both from Milestone 1 and Milestone 2
+        Stephen Groundwater - Original SuperTux art, both from Milestone 1 and Milestone 2
+        Wansti - Original SuperTux music, both from Milestone 1 and Milestone 2
+        Lukas Nystrand (Mortimer Twang) - Mortimer's Chipdisko
+        Mystical - Salcon
+        Discover Haxeflixel - Book / pdf I used to make the base of this game, PepperTux
+        Larry Ewing - Creator of Tux
+
+        Press Space to go back to the Main Menu", 18);
+        creditsText.setFormat("assets/fonts/SuperTux-Medium.ttf", 18, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+        creditsText.borderSize = 1.25;
+        creditsText.moves = true;
+        creditsText.velocity.y = -speed;
+        add(creditsText);
+    }
+
+    override public function update(elapsed:Float)
+    {
+        super.update(elapsed);
+
+        if (FlxG.keys.justPressed.SPACE)
+        {
+            FlxG.switchState(MainMenuState.new); // Switch State
+        }
+        
+        if (FlxG.keys.justPressed.DOWN)
+        {
+            creditsText.velocity.y -= increaseOrDecreaseSpeed;
+        }
+        else if (FlxG.keys.justPressed.UP)
+        {
+            creditsText.velocity.y += increaseOrDecreaseSpeed;
+        }
+    }
+}
