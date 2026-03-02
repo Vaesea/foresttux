@@ -1,6 +1,7 @@
 package states;
 
 import characters.enemies.Enemy;
+import characters.player.Fireball;
 import characters.player.Tux;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -10,6 +11,16 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.group.FlxGroup;
 import flixel.tile.FlxTilemap;
 import flixel.util.FlxColor;
+import objects.BonusBlock;
+import objects.BrickBlock.CoinNormalBrickBlock;
+import objects.BrickBlock.CoinSnowBrickBlock;
+import objects.BrickBlock.EmptyNormalBrickBlock;
+import objects.BrickBlock.EmptySnowBrickBlock;
+import objects.Coin;
+import objects.powerup.Egg;
+import objects.powerup.FireFlower;
+import objects.powerup.PowerUp;
+import objects.powerup.TuxDoll;
 import states.substates.LevelIntro;
 
 class PlayState extends FlxState
@@ -22,6 +33,7 @@ class PlayState extends FlxState
 	public var tux(default, null):Tux;
 	public var items(default, null):FlxTypedGroup<FlxSprite>;
 	public var blocks(default, null):FlxTypedGroup<FlxSprite>;
+	public var bricks(default, null):FlxTypedGroup<FlxSprite>;
 	public var atiles(default, null):FlxTypedGroup<FlxSprite>;
 	public var atilesFront(default, null):FlxTypedGroup<FlxSprite>;
 	var hud:HUD;
@@ -39,6 +51,7 @@ class PlayState extends FlxState
 		tux = new Tux();
 		items = new FlxTypedGroup<FlxSprite>();
 		blocks = new FlxTypedGroup<FlxSprite>();
+		bricks = new FlxTypedGroup<FlxSprite>();
 		hud = new HUD();
 		atiles = new FlxTypedGroup<FlxSprite>();
 		atilesFront = new FlxTypedGroup<FlxSprite>();
@@ -48,6 +61,7 @@ class PlayState extends FlxState
 		// Add things part 3
 		entities.add(items);
 		entities.add(blocks);
+		entities.add(bricks);
 		entities.add(enemies);
 		add(collision);
 		add(atiles);
@@ -82,13 +96,29 @@ class PlayState extends FlxState
 		// Tux collision
 		FlxG.collide(collision, tux);
 		FlxG.overlap(entities, tux, collideEntities);
+		FlxG.collide(tux, blocks, collideEntities);
+		FlxG.collide(tux, bricks, collideEntities);
 
 		// Enemy + Entity collision
 		FlxG.collide(collision, entities);
+		FlxG.collide(enemies, blocks);
+		FlxG.collide(enemies, bricks);
+		FlxG.overlap(entities, enemies, function (entity:FlxSprite, enemy:Enemy)
+		{
+			if (Std.isOfType(entity, Enemy))
+			{
+				enemy.collideOtherEnemy(cast entity);
+			}
+			if (Std.isOfType(entity, Fireball))
+			{
+				enemy.collideFireball(cast entity);
+			}
+		} );
 
 		// Item collision
 		FlxG.collide(collision, items);
 		FlxG.collide(items, blocks);
+		FlxG.collide(items, bricks);
 	}
 
 	function collideEntities(entity:FlxSprite, tux:Tux)
@@ -96,6 +126,21 @@ class PlayState extends FlxState
 		if (Std.isOfType(entity, Enemy))
 		{
 			(cast entity).interact(tux);
+		}
+
+		if (Std.isOfType(entity, Coin))
+		{
+			(cast entity).collect();
+		}
+
+		if (Std.isOfType(entity, PowerUp) || Std.isOfType(entity, FireFlower) || Std.isOfType(entity, Egg) || Std.isOfType(entity, TuxDoll))
+		{
+			(cast entity).collect(tux);
+		}
+
+		if (Std.isOfType(entity, EmptyNormalBrickBlock) || Std.isOfType(entity, EmptySnowBrickBlock) || Std.isOfType(entity, CoinSnowBrickBlock) || Std.isOfType(entity, CoinNormalBrickBlock) || Std.isOfType(entity, BonusBlock))
+		{
+			(cast entity).hit(tux);
 		}
 	}
 }

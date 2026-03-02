@@ -27,7 +27,7 @@ class Tux extends FlxSprite
     var decelerateOnJumpRelease = 0.5;
     
     // Current State
-    var currentState = Small;
+    public var currentState = Small;
 
     // (Added by AnatolyStev) Ducking
     var isDucking = false;
@@ -87,7 +87,7 @@ class Tux extends FlxSprite
         }
 
         // Kill Tux when he falls into the void
-        if (y == Global.PS.map.height - height)
+        if (y > Global.PS.map.height - height)
         {
             die();
         }
@@ -97,13 +97,13 @@ class Tux extends FlxSprite
         animate();
         shootFire();
 
-        // if (heldEnemy != null)
-        // {
-        //     if (FlxG.keys.justReleased.CONTROL)
-        //     {
-        //         throwEnemy();
-        //     }
-        // }
+        if (heldEnemy != null)
+        {
+            if (FlxG.keys.justReleased.CONTROL)
+            {
+                throwEnemy();
+            }
+        }
 
         // Put this after everything
         super.update(elapsed);
@@ -245,6 +245,33 @@ class Tux extends FlxSprite
             {
                 die();
             }
+        }
+    }
+
+    public function bigTux()
+    {
+        if (currentState == Small)
+        {
+            var smallHeight = height;
+            currentState = Big;
+            reloadGraphics();
+            y -= height - smallHeight;
+        }
+    }
+
+    public function fireTux()
+    {
+        if (currentState == Small)
+        {
+            var smallHeight = height;
+            currentState = Fire;
+            reloadGraphics();
+            y -= height - smallHeight;
+        }
+        else
+        {
+            currentState = Fire;
+            reloadGraphics();
         }
     }
 

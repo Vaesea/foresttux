@@ -12,6 +12,12 @@ import flixel.addons.editors.tiled.TiledObject;
 import flixel.addons.editors.tiled.TiledObjectLayer;
 import flixel.addons.editors.tiled.TiledTileLayer;
 import flixel.tile.FlxTilemap;
+import objects.BonusBlock;
+import objects.BrickBlock.CoinNormalBrickBlock;
+import objects.BrickBlock.CoinSnowBrickBlock;
+import objects.BrickBlock.EmptyNormalBrickBlock;
+import objects.BrickBlock.EmptySnowBrickBlock;
+import objects.Coin;
 import objects.solid.Solid;
 import states.PlayState;
 
@@ -89,6 +95,37 @@ class LevelLoader extends FlxState
                     state.atiles.add(new Flag(object.x, object.y - 32));
                 case "trans":
                     state.atiles.add(new WaterTrans(object.x, object.y - 32));
+            }
+        }
+
+        for (object in getLevelObjects(tiledMap, "Coins"))
+        {
+            switch (object.type)
+            {
+                default:
+                    state.items.add(new Coin(object.x, object.y - 32));
+            }
+        }
+
+        for (block in getLevelObjects(tiledMap, "Blocks"))
+        {
+            var blockToAdd = new BonusBlock(block.x, block.y - 32);
+            blockToAdd.content = block.type;
+            state.blocks.add(blockToAdd);
+        }
+
+        for (brick in getLevelObjects(tiledMap, "Bricks"))
+        {
+            switch(brick.type)
+            {
+                default:
+                    state.bricks.add(new EmptyNormalBrickBlock(brick.x, brick.y - 32));
+                case "snow":
+                    state.bricks.add(new EmptySnowBrickBlock(brick.x, brick.y - 32));
+                case "coin":
+                    state.bricks.add(new CoinNormalBrickBlock(brick.x, brick.y - 32));
+                case "snowcoin":
+                    state.bricks.add(new CoinSnowBrickBlock(brick.x, brick.y - 32));
             }
         }
 
