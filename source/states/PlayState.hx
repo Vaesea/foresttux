@@ -28,7 +28,6 @@ class PlayState extends FlxState
 	public var map:FlxTilemap;
 
 	// Add things part 1
-	public var collision(default, null):FlxTypedGroup<FlxSprite>;
 	public var enemies(default, null):FlxTypedGroup<Enemy>;
 	public var tux(default, null):Tux;
 	public var items(default, null):FlxTypedGroup<FlxSprite>;
@@ -38,6 +37,7 @@ class PlayState extends FlxState
 	public var atilesFront(default, null):FlxTypedGroup<FlxSprite>;
 	var hud:HUD;
 	var entities:FlxGroup;
+	public var solidThings:FlxGroup;
 
 	override public function create()
 	{
@@ -46,8 +46,8 @@ class PlayState extends FlxState
 
 		// Add things part 2
 		entities = new FlxGroup();
+		solidThings = new FlxGroup();
 		enemies = new FlxTypedGroup<Enemy>();
-		collision = new FlxTypedGroup<FlxSprite>();
 		tux = new Tux();
 		items = new FlxTypedGroup<FlxSprite>();
 		blocks = new FlxTypedGroup<FlxSprite>();
@@ -60,10 +60,8 @@ class PlayState extends FlxState
 
 		// Add things part 3
 		entities.add(items);
-		entities.add(blocks);
-		entities.add(bricks);
 		entities.add(enemies);
-		add(collision);
+		add(solidThings);
 		add(atiles);
 		add(entities);
 		add(tux);
@@ -94,15 +92,11 @@ class PlayState extends FlxState
 		super.update(elapsed);
 
 		// Tux collision
-		FlxG.collide(collision, tux);
+		FlxG.collide(solidThings, tux, collideEntities);
 		FlxG.overlap(entities, tux, collideEntities);
-		FlxG.collide(tux, blocks, collideEntities);
-		FlxG.collide(tux, bricks, collideEntities);
 
 		// Enemy + Entity collision
-		FlxG.collide(collision, entities);
-		FlxG.collide(enemies, blocks);
-		FlxG.collide(enemies, bricks);
+		FlxG.collide(solidThings, entities);
 		FlxG.overlap(entities, enemies, function (entity:FlxSprite, enemy:Enemy)
 		{
 			if (Std.isOfType(entity, Enemy))
@@ -116,9 +110,7 @@ class PlayState extends FlxState
 		} );
 
 		// Item collision
-		FlxG.collide(collision, items);
-		FlxG.collide(items, blocks);
-		FlxG.collide(items, bricks);
+		FlxG.collide(solidThings, items);
 	}
 
 	function collideEntities(entity:FlxSprite, tux:Tux)

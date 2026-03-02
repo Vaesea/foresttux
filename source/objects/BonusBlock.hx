@@ -6,8 +6,6 @@ import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
-import objects.powerup.Egg;
-import objects.powerup.FireFlower;
 import objects.powerup.PowerUp;
 import objects.powerup.TuxDoll;
 
@@ -38,7 +36,7 @@ class BonusBlock extends FlxSprite
 
     public function hit(tux:Tux)
     {
-        if (HFraycast2d.overlaps(tux) == false)
+        if (HFraycast2d.overlaps(tux) == false) // is this needed?
         {
             return;
         }

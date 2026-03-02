@@ -4,6 +4,7 @@ import AnimatedTiles.Flag;
 import AnimatedTiles.Water;
 import AnimatedTiles.WaterTrans;
 import characters.enemies.ViciousIvy;
+import characters.enemies.WalkingLeaf;
 import flixel.FlxState;
 import flixel.addons.display.FlxBackdrop;
 import flixel.addons.editors.tiled.TiledImageLayer;
@@ -82,7 +83,7 @@ class LevelLoader extends FlxState
         for (solid in getLevelObjects(tiledMap, "Solid"))
         {
             var solidSquare = new Solid(solid.x, solid.y, solid.width, solid.height); // Need this because width and height.
-            state.collision.add(solidSquare);
+            state.solidThings.add(solidSquare);
         }
 
         for (object in getLevelObjects(tiledMap, "AnimatedTiles"))
@@ -111,7 +112,7 @@ class LevelLoader extends FlxState
         {
             var blockToAdd = new BonusBlock(block.x, block.y - 32);
             blockToAdd.content = block.type;
-            state.blocks.add(blockToAdd);
+            state.solidThings.add(blockToAdd);
         }
 
         for (brick in getLevelObjects(tiledMap, "Bricks"))
@@ -119,13 +120,13 @@ class LevelLoader extends FlxState
             switch(brick.type)
             {
                 default:
-                    state.bricks.add(new EmptyNormalBrickBlock(brick.x, brick.y - 32));
+                    state.solidThings.add(new EmptyNormalBrickBlock(brick.x, brick.y - 32));
                 case "snow":
-                    state.bricks.add(new EmptySnowBrickBlock(brick.x, brick.y - 32));
+                    state.solidThings.add(new EmptySnowBrickBlock(brick.x, brick.y - 32));
                 case "coin":
-                    state.bricks.add(new CoinNormalBrickBlock(brick.x, brick.y - 32));
+                    state.solidThings.add(new CoinNormalBrickBlock(brick.x, brick.y - 32));
                 case "snowcoin":
-                    state.bricks.add(new CoinSnowBrickBlock(brick.x, brick.y - 32));
+                    state.solidThings.add(new CoinSnowBrickBlock(brick.x, brick.y - 32));
             }
         }
 
@@ -148,6 +149,8 @@ class LevelLoader extends FlxState
             {
                 default:
                     state.enemies.add(new ViciousIvy(object.x, object.y - 19));
+                case "walkingleaf":
+                    state.enemies.add(new WalkingLeaf(object.x, object.y - 19));
             }
         }
     }
