@@ -3,6 +3,7 @@ package;
 import AnimatedTiles.Flag;
 import AnimatedTiles.Water;
 import AnimatedTiles.WaterTrans;
+import characters.enemies.MrTree;
 import characters.enemies.Nolok;
 import characters.enemies.Snail;
 import characters.enemies.ViciousIvy;
@@ -156,7 +157,9 @@ class LevelLoader extends FlxState
                 case "snail":
                     state.enemies.add(new Snail(object.x, object.y - 29));
                 case "nolok":
-                    state.bosses.add(new Nolok(object.x, object.y - 151));
+                    state.bosses.add(new Nolok(object.x, object.y - 151)); // can you add more than one nolok per level? yes! but are you crazy? why would you do that? that would probably cause lag so fast too considering how weird the nolok code is.
+                case "mrtree":
+                    state.enemies.add(new MrTree(object.x, object.y - 69)); // the old version of 67
             }
         }
     }

@@ -249,7 +249,6 @@ class Enemy extends FlxSprite
             Global.score += scoreAmount;
             flipY = true;
             acceleration.x = 0;
-            velocity.x = fallForce;
             velocity.y = -fallForce;
             solid = false;
         }

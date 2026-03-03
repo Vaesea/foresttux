@@ -71,7 +71,7 @@ class BonusBlock extends FlxSprite
 
             case "tuxdoll":
                 var tuxDoll:TuxDoll = new TuxDoll(this.x, Std.int(y - 32));
-                Global.PS.items.add(tuxDoll);
+                Global.PS.td.add(tuxDoll);
                 FlxG.sound.play("assets/sounds/upgrade.wav");
         }
     }

@@ -34,6 +34,7 @@ class PlayState extends FlxState
 	public var bosses(default, null):FlxTypedGroup<Nolok>; // i wonder if this allows for multiple noloks? that'd be fun.
 	public var tux(default, null):Tux;
 	public var items(default, null):FlxTypedGroup<FlxSprite>;
+	public var td(default, null):FlxTypedGroup<TuxDoll>;
 	public var blocks(default, null):FlxTypedGroup<FlxSprite>;
 	public var bricks(default, null):FlxTypedGroup<FlxSprite>;
 	public var atiles(default, null):FlxTypedGroup<FlxSprite>;
@@ -53,6 +54,7 @@ class PlayState extends FlxState
 		enemies = new FlxTypedGroup<Enemy>();
 		bosses = new FlxTypedGroup<Nolok>();
 		tux = new Tux();
+		td = new FlxTypedGroup<TuxDoll>();
 		items = new FlxTypedGroup<FlxSprite>();
 		blocks = new FlxTypedGroup<FlxSprite>();
 		bricks = new FlxTypedGroup<FlxSprite>();
@@ -68,6 +70,7 @@ class PlayState extends FlxState
 		entities.add(bosses);
 		add(solidThings);
 		add(atiles);
+		add(td);
 		add(entities);
 		add(tux);
 		add(atilesFront);
@@ -99,6 +102,7 @@ class PlayState extends FlxState
 		// Tux collision
 		FlxG.collide(solidThings, tux, collideEntities);
 		FlxG.overlap(entities, tux, collideEntities);
+		FlxG.overlap(td, tux, collideEntities);
 
 		// Enemy + Entity collision
 		FlxG.collide(solidThings, entities);
