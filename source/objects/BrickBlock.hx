@@ -261,8 +261,8 @@ class CoinSnowBrickBlock extends FlxSprite
         animation.addByPrefix('empty', 'empty', 12, false);
         animation.play("normal");
 
-        HFraycast2d = new FlxSprite(x + 8, y + height);
-        HFraycast2d.makeGraphic(Std.int(width) - 16, Std.int(height) + 3, FlxColor.TRANSPARENT); // all this STD is gonna give me a... Nevermind. Forget about it. Std.int is there because width and height need to be ints.
+        HFraycast2d = new FlxSprite(x + 4, y + height);
+        HFraycast2d.makeGraphic(Std.int(width) - 8, Std.int(height) + 3, FlxColor.TRANSPARENT); // all this STD is gonna give me a... Nevermind. Forget about it. Std.int is there because width and height need to be ints.
         HFraycast2d.immovable = true;
         HFraycast2d.solid = false;
     }

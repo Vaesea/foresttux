@@ -13,7 +13,6 @@ import flixel.util.FlxColor;
 class WalkingLeaf extends Enemy
 {
     var walkingLeafImage = FlxAtlasFrames.fromSparrow("assets/images/characters/walking_leaf.png", "assets/images/characters/walking_leaf.xml");
-
     var point:FlxSprite;
 
     public function new(x:Float, y:Float)

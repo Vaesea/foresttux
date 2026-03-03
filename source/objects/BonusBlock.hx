@@ -28,15 +28,15 @@ class BonusBlock extends FlxSprite
         animation.addByPrefix('empty', 'bonusblock empty', 12, false);
         animation.play("full");
 
-        HFraycast2d = new FlxSprite(x + 8, y + height);
-        HFraycast2d.makeGraphic(Std.int(width) - 16, Std.int(height) + 3, FlxColor.TRANSPARENT); // all this STD is gonna give me a... Nevermind. Forget about it. Std.int is there because width and height need to be ints.
+        HFraycast2d = new FlxSprite(x + 4, y + height);
+        HFraycast2d.makeGraphic(Std.int(width) - 8, Std.int(height) + 3, FlxColor.TRANSPARENT); // all this STD is gonna give me a... Nevermind. Forget about it. Std.int is there because width and height need to be ints.
         HFraycast2d.immovable = true;
         HFraycast2d.solid = false;
     }
 
     public function hit(tux:Tux)
     {
-        if (HFraycast2d.overlaps(tux) == false) // is this needed?
+        if (!HFraycast2d.overlaps(tux)) // is this needed?
         {
             return;
         }
@@ -57,7 +57,7 @@ class BonusBlock extends FlxSprite
     function createItem()
     {
         FlxG.sound.play("assets/sounds/brick.wav");
-        switch (content)
+        switch(content)
         {
             default:
                 var coin:Coin = new Coin(this.x, Std.int(y - 32));

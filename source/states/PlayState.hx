@@ -1,6 +1,7 @@
 package states;
 
 import characters.enemies.Enemy;
+import characters.enemies.Nolok;
 import characters.player.Fireball;
 import characters.player.Tux;
 import flixel.FlxG;
@@ -26,9 +27,11 @@ import states.substates.LevelIntro;
 class PlayState extends FlxState
 {
 	public var map:FlxTilemap;
+	public var fuckTiled = 49; // because i added a fucking nolok tile in the creatures tileset, the global id shifted to 49.
 
 	// Add things part 1
 	public var enemies(default, null):FlxTypedGroup<Enemy>;
+	public var bosses(default, null):FlxTypedGroup<Nolok>; // i wonder if this allows for multiple noloks? that'd be fun.
 	public var tux(default, null):Tux;
 	public var items(default, null):FlxTypedGroup<FlxSprite>;
 	public var blocks(default, null):FlxTypedGroup<FlxSprite>;
@@ -48,6 +51,7 @@ class PlayState extends FlxState
 		entities = new FlxGroup();
 		solidThings = new FlxGroup();
 		enemies = new FlxTypedGroup<Enemy>();
+		bosses = new FlxTypedGroup<Nolok>();
 		tux = new Tux();
 		items = new FlxTypedGroup<FlxSprite>();
 		blocks = new FlxTypedGroup<FlxSprite>();
@@ -61,6 +65,7 @@ class PlayState extends FlxState
 		// Add things part 3
 		entities.add(items);
 		entities.add(enemies);
+		entities.add(bosses);
 		add(solidThings);
 		add(atiles);
 		add(entities);
@@ -76,7 +81,7 @@ class PlayState extends FlxState
 		var foregroundLayer:TiledTileLayer = cast LevelLoader.tiledMap.getLayer("Foreground");
         
         var foregroundMap = new FlxTilemap();
-        foregroundMap.loadMapFromArray(foregroundLayer.tileArray, LevelLoader.tiledMap.width, LevelLoader.tiledMap.height, "assets/images/tiles.png", 32, 32, 42);
+        foregroundMap.loadMapFromArray(foregroundLayer.tileArray, LevelLoader.tiledMap.width, LevelLoader.tiledMap.height, "assets/images/tiles.png", 32, 32, fuckTiled);
         foregroundMap.solid = false;
 
 		add(foregroundMap);
@@ -116,6 +121,11 @@ class PlayState extends FlxState
 	function collideEntities(entity:FlxSprite, tux:Tux)
 	{
 		if (Std.isOfType(entity, Enemy))
+		{
+			(cast entity).interact(tux);
+		}
+		
+		if (Std.isOfType(entity, Nolok))
 		{
 			(cast entity).interact(tux);
 		}

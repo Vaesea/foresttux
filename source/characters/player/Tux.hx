@@ -4,6 +4,7 @@ import characters.enemies.Enemy;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
+import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 
 enum TuxStates
@@ -226,6 +227,7 @@ class Tux extends FlxSprite
         if (canTakeDamage == true)
         {
             canTakeDamage = false;
+            FlxTween.flicker(this, invFrames, 0.1, {type: ONESHOT});
             new FlxTimer().start(invFrames, function(_) {canTakeDamage = true;}, 1);
             FlxG.sound.play('assets/sounds/hurt.wav');
             

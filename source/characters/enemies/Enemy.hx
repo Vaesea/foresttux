@@ -99,13 +99,13 @@ class Enemy extends FlxSprite
         {
             if (currentHeldEnemyState == Held && held != null)
             {
-                if (held.flipX == true)
+                if (held.flipX)
                 {
-                    x = held.x - 8;
+                    x = held.x + 16; // no matter what i do this wont actually change where the snail is when tux is holding it and facing left
                 }
-                else if (held.flipX == false)
+                else if (!held.flipX)
                 {
-                    x = held.x + 11;
+                    x = held.x + 16;
                 }
 
                 y = held.y;
@@ -126,7 +126,7 @@ class Enemy extends FlxSprite
         flipX = !flipX;
         direction = -direction;
 
-        // SuperTux Snail-like enemy stuff, unused for now.
+        // why is this here?
         if (jumpsWhenHittingWall && currentHeldEnemyState == MovingSquished)
         {
             velocity.y = -hitWallJumpHeight;

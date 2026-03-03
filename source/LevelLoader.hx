@@ -3,6 +3,8 @@ package;
 import AnimatedTiles.Flag;
 import AnimatedTiles.Water;
 import AnimatedTiles.WaterTrans;
+import characters.enemies.Nolok;
+import characters.enemies.Snail;
 import characters.enemies.ViciousIvy;
 import characters.enemies.WalkingLeaf;
 import flixel.FlxState;
@@ -65,13 +67,13 @@ class LevelLoader extends FlxState
         var mainLayer:TiledTileLayer = cast tiledMap.getLayer("Main");
         
         state.map = new FlxTilemap();
-        state.map.loadMapFromArray(mainLayer.tileArray, tiledMap.width, tiledMap.height, "assets/images/tiles.png", 32, 32, 42); // tiled is bad and i have to start at global id 42. fuck tiled.
+        state.map.loadMapFromArray(mainLayer.tileArray, tiledMap.width, tiledMap.height, "assets/images/tiles.png", 32, 32, state.fuckTiled); // tiled is bad and i have to start at global id 42. fuck tiled.
         state.map.solid = false;
 
         var backgroundLayer:TiledTileLayer = cast tiledMap.getLayer("Background");
         
         var backgroundMap = new FlxTilemap();
-        backgroundMap.loadMapFromArray(backgroundLayer.tileArray, tiledMap.width, tiledMap.height, "assets/images/tiles.png", 32, 32, 42);
+        backgroundMap.loadMapFromArray(backgroundLayer.tileArray, tiledMap.width, tiledMap.height, "assets/images/tiles.png", 32, 32, state.fuckTiled);
         backgroundMap.solid = false;
 
         state.add(backgroundMap);
@@ -151,6 +153,10 @@ class LevelLoader extends FlxState
                     state.enemies.add(new ViciousIvy(object.x, object.y - 19));
                 case "walkingleaf":
                     state.enemies.add(new WalkingLeaf(object.x, object.y - 19));
+                case "snail":
+                    state.enemies.add(new Snail(object.x, object.y - 29));
+                case "nolok":
+                    state.bosses.add(new Nolok(object.x, object.y - 151));
             }
         }
     }

@@ -18,6 +18,8 @@ class WorldmapLoader extends FlxState
     {
         var tiledMap = new TiledMap("assets/data/worldmaps/" + worldmap + ".tmx");
 
+        var fuckTiled = 49;
+
         var song = tiledMap.properties.get("Music");
         var worldmapName = tiledMap.properties.get("Worldmap Name");
 
@@ -28,21 +30,21 @@ class WorldmapLoader extends FlxState
         var waterLayer:TiledTileLayer = cast tiledMap.getLayer("Water");
 
         var waterMap = new FlxTilemap();
-        waterMap.loadMapFromArray(waterLayer.tileArray, tiledMap.width, tiledMap.height, "assets/images/tiles.png", 32, 32, 42);
+        waterMap.loadMapFromArray(waterLayer.tileArray, tiledMap.width, tiledMap.height, "assets/images/tiles.png", 32, 32, fuckTiled);
         waterMap.solid = false;
 
         // Main
         var mainLayer:TiledTileLayer = cast tiledMap.getLayer("Main");
 
         state.map = new FlxTilemap();
-        state.map.loadMapFromArray(mainLayer.tileArray, tiledMap.width, tiledMap.height, "assets/images/tiles.png", 32, 32, 42);
+        state.map.loadMapFromArray(mainLayer.tileArray, tiledMap.width, tiledMap.height, "assets/images/tiles.png", 32, 32, fuckTiled);
         state.map.solid = false;
 
         // Foreground 1
         var foregroundOneLayer:TiledTileLayer = cast tiledMap.getLayer("Decorations");
         
         var foregroundOneMap = new FlxTilemap();
-        foregroundOneMap.loadMapFromArray(foregroundOneLayer.tileArray, tiledMap.width, tiledMap.height, "assets/images/tiles.png", 32, 32, 42);
+        foregroundOneMap.loadMapFromArray(foregroundOneLayer.tileArray, tiledMap.width, tiledMap.height, "assets/images/tiles.png", 32, 32, fuckTiled);
         foregroundOneMap.solid = false;
 
         state.add(waterMap);
