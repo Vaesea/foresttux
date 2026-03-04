@@ -10,6 +10,7 @@ import flixel.FlxState;
 import flixel.addons.editors.tiled.TiledTileLayer;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.group.FlxGroup;
+import flixel.math.FlxPoint;
 import flixel.tile.FlxTilemap;
 import flixel.util.FlxColor;
 import objects.BonusBlock;
@@ -22,6 +23,7 @@ import objects.powerup.Egg;
 import objects.powerup.FireFlower;
 import objects.powerup.PowerUp;
 import objects.powerup.TuxDoll;
+import objects.solid.Goal;
 import states.substates.LevelIntro;
 
 class PlayState extends FlxState
@@ -42,6 +44,8 @@ class PlayState extends FlxState
 	var hud:HUD;
 	var entities:FlxGroup;
 	public var solidThings:FlxGroup;
+
+	public var checkpoint:FlxPoint;
 
 	override public function create()
 	{
@@ -91,6 +95,8 @@ class PlayState extends FlxState
 
 		// Start the Level Intro
 		openSubState(new LevelIntro(FlxColor.BLACK));
+
+		trace(Global.checkpointReached);
 		
 		super.create();
 	}
@@ -98,6 +104,8 @@ class PlayState extends FlxState
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
+
+		updateCheckpoint();
 
 		// Tux collision
 		FlxG.collide(solidThings, tux, collideEntities);
@@ -147,6 +155,26 @@ class PlayState extends FlxState
 		if (Std.isOfType(entity, EmptyNormalBrickBlock) || Std.isOfType(entity, EmptySnowBrickBlock) || Std.isOfType(entity, CoinSnowBrickBlock) || Std.isOfType(entity, CoinNormalBrickBlock) || Std.isOfType(entity, BonusBlock))
 		{
 			(cast entity).hit(tux);
+		}
+
+		if (Std.isOfType(entity, Goal))
+		{
+			(cast entity).reach(tux);
+		}
+	}
+
+	function updateCheckpoint()
+	{
+		if (checkpoint == null || Global.checkpointReached)
+		{
+			return;
+		}
+
+		if (tux.x >= checkpoint.x)
+		{
+			trace("Checkpoint reached!");
+			Global.checkpointReached = true;
+			trace(Global.checkpointReached);
 		}
 	}
 }

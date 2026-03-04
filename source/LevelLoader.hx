@@ -15,6 +15,7 @@ import flixel.addons.editors.tiled.TiledMap;
 import flixel.addons.editors.tiled.TiledObject;
 import flixel.addons.editors.tiled.TiledObjectLayer;
 import flixel.addons.editors.tiled.TiledTileLayer;
+import flixel.math.FlxPoint;
 import flixel.tile.FlxTilemap;
 import objects.BonusBlock;
 import objects.BrickBlock.CoinNormalBrickBlock;
@@ -22,6 +23,7 @@ import objects.BrickBlock.CoinSnowBrickBlock;
 import objects.BrickBlock.EmptyNormalBrickBlock;
 import objects.BrickBlock.EmptySnowBrickBlock;
 import objects.Coin;
+import objects.solid.Goal;
 import objects.solid.Solid;
 import states.PlayState;
 
@@ -80,7 +82,28 @@ class LevelLoader extends FlxState
         state.add(backgroundMap);
         state.add(state.map);
 
-        var tuxPosition:TiledObject = getLevelObjects(tiledMap, "Player")[0];
+        for (solid in getLevelObjects(tiledMap, "Level"))
+        {
+            switch (solid.type)
+            {
+                case "goal":
+                    var goalSquare = new Goal(solid.x, solid.y, solid.width, solid.height); // Need this because width and height.
+                    state.solidThings.add(goalSquare);
+                case "checkpoint":
+                    state.checkpoint = new FlxPoint(solid.x, solid.y - 32);
+            }
+        }
+
+        var tuxThing:TiledObject = getLevelObjects(tiledMap, "Player")[0];
+        var tuxPosition:FlxPoint = new FlxPoint(tuxThing.x, tuxThing.y - 64);
+        if (Global.checkpointReached)
+        {
+            tuxPosition = state.checkpoint;
+        }
+        else
+        {
+            tuxPosition.set(tuxThing.x, tuxThing.y);
+        }
         state.tux.setPosition(tuxPosition.x, tuxPosition.y - 64);
 
         for (solid in getLevelObjects(tiledMap, "Solid"))

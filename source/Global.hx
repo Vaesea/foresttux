@@ -27,6 +27,8 @@ class Global
     public static var levelCreator:String;
     public static var dotLevelName:String;
 
+    public static var checkpointReached = false;
+
     public static var worldmaps:Array<String> = [];
 
     public static var currentWorldmap = 0;

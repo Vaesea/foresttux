@@ -45,8 +45,9 @@ class MainMenuState extends FlxState
             Global.lives = 3;
         }
 
-        FlxG.sound.play("assets/sounds/lifeup.wav", 1.0, false); // Test, but a nice change anyways.
+        Global.checkpointReached = false;
 
+        FlxG.sound.play("assets/sounds/lifeup.wav", 1.0, false); // Test, but a nice change anyways.
         FlxG.sound.playMusic("assets/music/theme.ogg", 1.0, true);
 
         // Adding Title Screen background

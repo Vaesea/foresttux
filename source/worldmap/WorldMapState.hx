@@ -132,6 +132,8 @@ class WorldMapState extends FlxState
                 Global.currentLevel = level.ldLevelPath;
                 Global.currentSection = level.ldSection;
 
+                Global.checkpointReached = false;
+
                 FlxG.switchState(PlayState.new);
             }
         }
