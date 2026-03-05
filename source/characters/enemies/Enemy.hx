@@ -139,6 +139,8 @@ class Enemy extends FlxSprite
 
     public function interact(tux:Tux)
     {
+        checkIfHerring(tux);
+
         var tuxStomp = (tux.velocity.y > 0 && tux.y + tux.height < y + 10); // This checks for Tux stomping the enemy.
 
         if (!alive || waitToCollide > 0)
@@ -155,6 +157,8 @@ class Enemy extends FlxSprite
 
         if (tuxStomp) // Can't just do the simple isTouching UP thing because then if the player hits the corner of the enemy, they take damage. That's not exactly fair.
         {
+            tux.y -= 1; // TODO: remove this when haxeflixel is good
+
             Global.score += scoreAmount;
 
             if (FlxG.keys.anyPressed([SPACE, UP, W]))
@@ -312,6 +316,14 @@ class Enemy extends FlxSprite
             held = null;
             waitToCollide = 0.25;
             FlxG.sound.play("assets/sounds/kick.wav");
+        }
+    }
+
+    function checkIfHerring(tux:Tux)
+    {
+        if (tux.invincible)
+        {
+            killFall();
         }
     }
 }

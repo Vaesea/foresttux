@@ -2,10 +2,10 @@ package objects;
 
 import characters.player.Tux;
 import flixel.FlxG;
+import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.tweens.FlxTween;
-import flixel.util.FlxColor;
 import objects.powerup.PowerUp;
 import objects.powerup.TuxDoll;
 
@@ -13,7 +13,6 @@ class BonusBlock extends FlxSprite
 {
     public var content:String;
     public var isEmpty = false;
-    var HFraycast2d:FlxSprite; // it's actually like an area2d but anatolystev forgot
 
     var blockImage = FlxAtlasFrames.fromSparrow('assets/images/objects/bonus/bonusblock.png', 'assets/images/objects/bonus/bonusblock.xml');
 
@@ -27,23 +26,19 @@ class BonusBlock extends FlxSprite
         animation.addByPrefix('full', 'bonusblock full', 12, true); // I messed up and used default settings for the FNF Spritesheet and XML generator.
         animation.addByPrefix('empty', 'bonusblock empty', 12, false);
         animation.play("full");
-
-        HFraycast2d = new FlxSprite(x + 4, y + height);
-        HFraycast2d.makeGraphic(Std.int(width) - 8, Std.int(height) + 3, FlxColor.TRANSPARENT); // all this STD is gonna give me a... Nevermind. Forget about it. Std.int is there because width and height need to be ints.
-        HFraycast2d.immovable = true;
-        HFraycast2d.solid = false;
     }
 
     public function hit(tux:Tux)
     {
-        if (!HFraycast2d.overlaps(tux)) // is this needed?
+        if (isEmpty)
         {
             return;
         }
 
-        if (isEmpty == false) // No more TODO :)
+        if (tux.isTouching(UP) || tux.wasTouching == UP) // No more TODO :) also wasTouching is just there for safety reasons. Also did you really think there was no more TODO? TODO: wait until haxeflixel people update collisions in a way that makes this actually work!!!!
         {
             isEmpty = true;
+            setSize(32, 31); // TODO: Remove this when Bonus Blocks can finally work properly in HaxeFlixel.
             createItem();
             FlxTween.tween(this, {y: y - 4}, 0.05) .wait(0.05) .then(FlxTween.tween(this, {y: y}, 0.05, {onComplete: empty}));
         }

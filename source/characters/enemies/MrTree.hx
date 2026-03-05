@@ -70,6 +70,8 @@ class MrTree extends Enemy
 
         if (tuxStomp) // Can't just do the simple isTouching UP thing because then if the player hits the corner of the enemy, they take damage. That's not exactly fair.
         {
+            tux.y -= 1; // TODO: Remove this when HaxeFlixel is good.
+
             Global.score += scoreAmount;
 
             if (FlxG.keys.anyPressed([SPACE, UP, W]))

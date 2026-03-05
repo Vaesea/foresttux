@@ -75,6 +75,7 @@ class Stumpy extends Enemy
         {
             super.interact(tux);
         }
+
         if (invincible)
         {
             var tuxStomp = (tux.velocity.y > 0 && tux.y + tux.height < y + 10); // This checks for Tux stomping the enemy.
@@ -83,6 +84,8 @@ class Stumpy extends Enemy
 
             if (tuxStomp) // Can't just do the simple isTouching UP thing because then if the player hits the corner of the enemy, they take damage. That's not exactly fair.
             {
+                tux.y -= 1; // TODO: ok if you read enemy.hx you know what this TODO is.
+                
                 if (FlxG.keys.anyPressed([SPACE, UP, W]))
                 {
                     tux.velocity.y = --tux.maxJumpHeight;

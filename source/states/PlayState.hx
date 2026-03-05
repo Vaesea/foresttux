@@ -15,9 +15,7 @@ import flixel.tile.FlxTilemap;
 import flixel.util.FlxColor;
 import objects.BonusBlock;
 import objects.BrickBlock.CoinNormalBrickBlock;
-import objects.BrickBlock.CoinSnowBrickBlock;
 import objects.BrickBlock.EmptyNormalBrickBlock;
-import objects.BrickBlock.EmptySnowBrickBlock;
 import objects.Coin;
 import objects.powerup.Egg;
 import objects.powerup.FireFlower;
@@ -29,7 +27,7 @@ import states.substates.LevelIntro;
 class PlayState extends FlxState
 {
 	public var map:FlxTilemap;
-	public var fuckTiled = 49; // because i added a fucking nolok tile in the creatures tileset, the global id shifted to 49.
+	public var uhoh = 49; // because i added a fucking nolok tile in the creatures tileset, the global id shifted to 49.
 
 	// Add things part 1
 	public var enemies(default, null):FlxTypedGroup<Enemy>;
@@ -88,7 +86,7 @@ class PlayState extends FlxState
 		var foregroundLayer:TiledTileLayer = cast LevelLoader.tiledMap.getLayer("Foreground");
         
         var foregroundMap = new FlxTilemap();
-        foregroundMap.loadMapFromArray(foregroundLayer.tileArray, LevelLoader.tiledMap.width, LevelLoader.tiledMap.height, "assets/images/tiles.png", 32, 32, fuckTiled);
+        foregroundMap.loadMapFromArray(foregroundLayer.tileArray, LevelLoader.tiledMap.width, LevelLoader.tiledMap.height, "assets/images/tiles.png", 32, 32, uhoh);
         foregroundMap.solid = false;
 
 		add(foregroundMap);
@@ -108,8 +106,8 @@ class PlayState extends FlxState
 		updateCheckpoint();
 
 		// Tux collision
-		FlxG.collide(solidThings, tux, collideEntities);
 		FlxG.overlap(entities, tux, collideEntities);
+		FlxG.collide(solidThings, tux, collideEntities);
 		FlxG.overlap(td, tux, collideEntities);
 
 		// Enemy + Entity collision
@@ -152,7 +150,7 @@ class PlayState extends FlxState
 			(cast entity).collect(tux);
 		}
 
-		if (Std.isOfType(entity, EmptyNormalBrickBlock) || Std.isOfType(entity, EmptySnowBrickBlock) || Std.isOfType(entity, CoinSnowBrickBlock) || Std.isOfType(entity, CoinNormalBrickBlock) || Std.isOfType(entity, BonusBlock))
+		if (Std.isOfType(entity, EmptyNormalBrickBlock) || Std.isOfType(entity, CoinNormalBrickBlock) || Std.isOfType(entity, BonusBlock))
 		{
 			(cast entity).hit(tux);
 		}
