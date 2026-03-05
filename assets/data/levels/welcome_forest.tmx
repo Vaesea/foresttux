@@ -2,7 +2,7 @@
 <map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="500" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="16" nextobjectid="345">
  <properties>
   <property name="Level Creator" value="Vaesea"/>
-  <property name="Level Name" value="Test Level"/>
+  <property name="Level Name" value="Welcome To The Forest"/>
   <property name="Music" value="assets/music/forest.ogg"/>
  </properties>
  <tileset firstgid="1" source="../tilesets/blocks.tsx"/>
