@@ -20,8 +20,6 @@ class EmptyNormalBrickBlock extends FlxSprite
     var scoreAmount = 25;
     var gravity = 1000;
 
-    var HFraycast2d:FlxSprite; // it's BASICALLY a raycast2d, right?? (I believe the word you were looking for was area2d)
-
     var brickImage = FlxAtlasFrames.fromSparrow('assets/images/objects/bonus/brick.png', 'assets/images/objects/bonus/brick.xml');
     
     public function new(x:Float, y:Float)
@@ -92,8 +90,6 @@ class CoinNormalBrickBlock extends FlxSprite
 
     var howManyHits = 5;
     var isHit = false;
-
-    var HFraycast2d:FlxSprite; // it's BASICALLY a raycast2d, right??
 
     var brickCoinImage = FlxAtlasFrames.fromSparrow('assets/images/objects/bonus/brick.png', 'assets/images/objects/bonus/brick.xml');
     
